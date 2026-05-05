@@ -90,4 +90,29 @@ export class EmailService implements IEmailService {
       );
     }
   }
+
+  async sendPasswordReset(email: string, resetUrl: string): Promise<void> {
+    try {
+      if (!process.env["SMTP_PASS"]) throw new Error("SMTP_PASS missing");
+      await this.transporter.sendMail({
+        from: this.from,
+        to: email,
+        subject: "🔐 Reset Your ReadySip Password",
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:480px;margin:auto;padding:32px;background:#fafafa;border-radius:12px;border:1px solid #eee;">
+            <h2 style="color:#c8601a;">ReadySip ☕</h2>
+            <p style="color:#333;">We received a request to reset your password.</p>
+            <p style="color:#333;">Click the button below to set a new password. This link expires in <strong>15 minutes</strong>.</p>
+            <div style="text-align:center;margin:28px 0;">
+              <a href="${resetUrl}" style="background:#c8601a;color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">Reset Password</a>
+            </div>
+            <p style="color:#999;font-size:12px;">If you didn't request this, you can safely ignore this email.</p>
+          </div>`,
+      });
+      console.log(`✅ Password reset email sent to ${email}`);
+    } catch (err) {
+      console.warn("⚠️  Could not send password reset email:", err);
+      console.log(`🔑 RESET URL FOR ${email}: ${resetUrl}`);
+    }
+  }
 }

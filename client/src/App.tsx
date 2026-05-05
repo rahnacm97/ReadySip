@@ -12,6 +12,8 @@ import MenuPage from "./pages/Home/MenuPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import VerifyOTPPage from "./pages/auth/VerifyOTPPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import MyOrdersPage from "./pages/Home/MyOrdersPage";
 
 // Admin Pages
@@ -49,6 +51,8 @@ const App: React.FC = () => (
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/verify-otp" element={<VerifyOTPPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Customer Protected */}
           <Route path="/my-orders" element={<MyOrdersPage />} />

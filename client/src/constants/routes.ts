@@ -3,6 +3,8 @@ export const APP_ROUTES = {
   LOGIN: "/login",
   SIGNUP: "/signup",
   VERIFY_OTP: "/verify-otp",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
   MENU: "/menu",
   PROFILE: "/profile",
   ORDERS: "/my-orders",
@@ -22,6 +24,8 @@ export const API_ROUTES = {
     RESEND_OTP: "/auth/resend-otp",
     GOOGLE_LOGIN: "/auth/google-login",
     ME: "/auth/me",
+    FORGOT_PASSWORD: "/auth/forgot-password",
+    RESET_PASSWORD: "/auth/reset-password",
   },
   PRODUCTS: {
     BASE: "/products",

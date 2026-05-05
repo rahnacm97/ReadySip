@@ -5,6 +5,7 @@ import { generateToken } from "../utils/generateToken";
 import { IUser } from "../interfaces/models/user";
 import { OAuth2Client } from "google-auth-library";
 import { ResponseMessages } from "../constants/enums";
+import crypto from "crypto";
 import {
   SignupResult,
   LoginResult,
@@ -130,5 +131,35 @@ export class AuthService implements IAuthService {
     const user = await this.userRepo.findById(id);
     if (!user) throw new Error(ResponseMessages.USER_NOT_FOUND);
     return user;
+  }
+
+  async forgotPassword(email: string): Promise<void> {
+    const user = await this.userRepo.findByEmail(email);
+    if (!user) return; // Don't reveal if email exists
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetTokenHash = crypto.createHash("sha256").update(resetToken).digest("hex");
+    const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 min
+
+    user.resetPasswordToken = resetTokenHash;
+    user.resetPasswordExpiry = resetTokenExpiry;
+    await user.save();
+
+    const frontendUrl = process.env["FRONTEND_URL"] ?? "http://localhost:5173";
+    const resetUrl = `${frontendUrl}/reset-password?token=${resetToken}`;
+    await this.emailService.sendPasswordReset(email, resetUrl);
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+    const user = await this.userRepo.findByResetToken(tokenHash);
+    if (!user || !user.resetPasswordExpiry || user.resetPasswordExpiry < new Date()) {
+      throw new Error("Reset link is invalid or has expired");
+    }
+
+    user.password = newPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpiry = undefined;
+    await user.save();
   }
 }

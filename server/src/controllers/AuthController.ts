@@ -118,4 +118,39 @@ export class AuthController implements IAuthController {
       res.status(404).json({ success: false, message: msg });
     }
   };
+
+  forgotPassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email } = req.body as { email: string };
+      if (!email) {
+        res.status(HttpStatus.BAD_REQUEST).json({ success: false, message: "Email is required" });
+        return;
+      }
+      await this.authService.forgotPassword(email);
+      // Always return success to prevent email enumeration
+      res.json({ success: true, message: "If that email is registered, a reset link has been sent." });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Failed to send reset email";
+      res.status(HttpStatus.BAD_REQUEST).json({ success: false, message: msg });
+    }
+  };
+
+  resetPassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { token, password } = req.body as { token: string; password: string };
+      if (!token || !password) {
+        res.status(HttpStatus.BAD_REQUEST).json({ success: false, message: ResponseMessages.VALIDATION_ERROR });
+        return;
+      }
+      if (password.length < 6) {
+        res.status(HttpStatus.BAD_REQUEST).json({ success: false, message: "Password must be at least 6 characters" });
+        return;
+      }
+      await this.authService.resetPassword(token, password);
+      res.json({ success: true, message: "Password reset successful. You can now log in." });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Reset failed";
+      res.status(HttpStatus.BAD_REQUEST).json({ success: false, message: msg });
+    }
+  };
 }

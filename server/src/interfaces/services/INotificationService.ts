@@ -13,6 +13,7 @@ export interface IEmailService {
     name: string,
     timeOfArrival: string,
   ): Promise<void>;
+  sendPasswordReset(email: string, resetUrl: string): Promise<void>;
 }
 
 export interface ISMSService {

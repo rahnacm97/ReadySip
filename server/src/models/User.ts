@@ -17,6 +17,8 @@ const userSchema = new Schema<IUser>(
     googleId: { type: String, unique: true, sparse: true },
     role: { type: String, enum: ["customer", "admin"], default: "customer" },
     isVerified: { type: Boolean, default: false },
+    resetPasswordToken: { type: String },
+    resetPasswordExpiry: { type: Date },
   },
   { timestamps: true },
 );

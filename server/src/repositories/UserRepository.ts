@@ -35,4 +35,11 @@ export class UserRepository implements IUserRepository {
     const count = await UserModel.countDocuments({ email });
     return count > 0;
   }
+
+  async findByResetToken(token: string): Promise<IUser | null> {
+    return UserModel.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpiry: { $gt: new Date() },
+    });
+  }
 }

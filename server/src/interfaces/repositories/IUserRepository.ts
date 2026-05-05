@@ -14,4 +14,5 @@ export interface IUserRepository {
   }): Promise<IUser>;
   setVerified(email: string): Promise<IUser | null>;
   existsByEmail(email: string): Promise<boolean>;
+  findByResetToken(token: string): Promise<IUser | null>;
 }

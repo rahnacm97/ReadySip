@@ -11,6 +11,12 @@ router.post("/login", (req, res) => authController.login(req, res));
 router.post("/google-login", (req, res) =>
   authController.googleLogin(req, res),
 );
+router.post("/forgot-password", (req, res) =>
+  authController.forgotPassword(req, res),
+);
+router.post("/reset-password", (req, res) =>
+  authController.resetPassword(req, res),
+);
 router.get("/me", protect, (req, res) => authController.getMe(req, res));
 
 export default router;

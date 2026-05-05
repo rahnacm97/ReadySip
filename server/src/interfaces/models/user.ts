@@ -9,5 +9,7 @@ export interface IUser extends Document {
   googleId?: string;
   role: UserRole;
   isVerified: boolean;
+  resetPasswordToken?: string;
+  resetPasswordExpiry?: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }

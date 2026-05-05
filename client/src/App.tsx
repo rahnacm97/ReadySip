@@ -63,9 +63,11 @@ const App: React.FC = () => (
               </AdminRoute>
             }
           >
-            <Route index element={<AdminDashboard />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="products" element={<ProductManagement />} />
             <Route path="orders" element={<OrderManagement />} />
+            {/* Redirect /admin to /admin/dashboard */}
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

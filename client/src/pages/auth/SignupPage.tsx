@@ -15,22 +15,44 @@ const SignupPage: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!form.name.trim()) newErrors.name = "Name is required";
+    if (!form.email) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Invalid email format";
+    
+    if (!form.phone) newErrors.phone = "Phone is required";
+    else if (!/^\d{10}$/.test(form.phone.replace(/[^0-9]/g, ''))) newErrors.phone = "Invalid phone number";
+
+    if (!form.password) newErrors.password = "Password is required";
+    else if (form.password.length < 6) newErrors.password = "Min 6 characters";
+
+    if (form.password !== form.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    if (errors[e.target.name]) {
+      setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-    if (form.password.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
+    if (!validate()) return;
+
     setLoading(true);
     try {
       await authService.signup({
@@ -51,8 +73,6 @@ const SignupPage: React.FC = () => {
     }
   };
 
-  const dispatch = useAppDispatch();
-
   const handleGoogleSuccess = async (credentialResponse: {
     credential?: string;
   }) => {
@@ -63,7 +83,7 @@ const SignupPage: React.FC = () => {
         credentialResponse.credential,
       );
       dispatch(loginAction({ token, user }));
-      toast.success(`Welcome back, ${user.name.split(" ")[0]}! ☕`);
+      toast.success(`Welcome to ReadySip, ${user.name.split(" ")[0]}! ☕`);
       navigate(APP_ROUTES.MENU);
     } catch {
       toast.error("Google login failed");
@@ -73,94 +93,177 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="customer-theme flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md animate-slide-up">
-        <div className="text-center mb-8">
-          <Link
-            to={APP_ROUTES.HOME}
-            className="inline-flex items-center gap-2 mb-6"
-          >
-            <span className="text-3xl">☕</span>
-            <span className="font-display text-2xl font-bold text-brand-400">
-              ReadySip
-            </span>
-          </Link>
-          <h1 className="font-display text-3xl font-bold text-stone-100">
-            Create account
-          </h1>
-          <p className="text-stone-400 mt-2">
-            Join ReadySip and skip the queue
-          </p>
+    <div className="min-h-screen bg-warm-50 flex flex-row-reverse">
+      {/* Left Side: Image Content (Right in flex-row-reverse) */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-brand-500">
+        <div className="absolute inset-0 opacity-60">
+          <img 
+            src="/1.jpg" 
+            alt="Cafe Interior" 
+            className="w-full h-full object-cover scale-105"
+          />
         </div>
-        <div className="card p-8">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {(
-              ["name", "email", "phone", "password", "confirmPassword"] as const
-            ).map((field) => (
-              <div key={field}>
-                <label className="block text-stone-400 text-sm mb-1 capitalize">
-                  {field === "confirmPassword"
-                    ? "Confirm Password"
-                    : field.charAt(0).toUpperCase() + field.slice(1)}
-                </label>
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-900/60 via-transparent to-brand-900/90" />
+        <div className="relative z-10 w-full flex flex-col justify-between p-16 text-white">
+          <Link to="/" className="flex items-center gap-2 group">
+            <span className="text-4xl">☕</span>
+            <span className="text-3xl font-display font-black tracking-tight">ReadySip</span>
+          </Link>
+          <div>
+            <h2 className="text-6xl font-display font-black leading-tight mb-6">
+              Join the <br/>
+              <span className="text-brand-200">Sip Revolution.</span>
+            </h2>
+            <p className="text-brand-100 text-xl font-medium max-w-md">
+              Create an account to manage your favorites, track your orders, and enjoy faster sips.
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="h-px w-12 bg-brand-300" />
+            <p className="text-brand-300 font-bold uppercase tracking-[0.2em] text-xs">
+              Brewed in Bangalore
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side: Form Content (Left in flex-row-reverse) */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 md:p-16 bg-[#FDFCFB] relative overflow-y-auto">
+        <div className="absolute top-8 left-8 lg:hidden">
+          <Link to="/" className="flex items-center gap-2">
+            <span className="text-2xl">☕</span>
+            <span className="text-xl font-display font-black text-brand-600">ReadySip</span>
+          </Link>
+        </div>
+
+        <div className="w-full max-w-md animate-fade-in py-12">
+          <div className="mb-10 text-center lg:text-left">
+            <h1 className="text-4xl font-display font-black text-stone-900 mb-3 tracking-tight">
+              Create account
+            </h1>
+            <p className="text-stone-500 font-medium">Join ReadySip and skip the queue</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+            {/* Name Field */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 block ml-1">Full Name</label>
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                className={`w-full bg-stone-50 border ${errors.name ? 'border-red-400 ring-2 ring-red-50' : 'border-stone-100 focus:border-brand-500'} rounded-xl px-5 py-3 text-stone-900 font-medium transition-all outline-none`}
+                placeholder="John Doe"
+              />
+              {errors.name && <p className="text-[9px] font-black text-red-500 uppercase tracking-widest ml-1 animate-fade-in">⚠ {errors.name}</p>}
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 block ml-1">Email Address</label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                className={`w-full bg-stone-50 border ${errors.email ? 'border-red-400 ring-2 ring-red-50' : 'border-stone-100 focus:border-brand-500'} rounded-xl px-5 py-3 text-stone-900 font-medium transition-all outline-none`}
+                placeholder="name@example.com"
+              />
+              {errors.email && <p className="text-[9px] font-black text-red-500 uppercase tracking-widest ml-1 animate-fade-in">⚠ {errors.email}</p>}
+            </div>
+
+            {/* Phone Field */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 block ml-1">Phone Number</label>
+              <input
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                className={`w-full bg-stone-50 border ${errors.phone ? 'border-red-400 ring-2 ring-red-50' : 'border-stone-100 focus:border-brand-500'} rounded-xl px-5 py-3 text-stone-900 font-medium transition-all outline-none`}
+                placeholder="9999988888"
+              />
+              {errors.phone && <p className="text-[9px] font-black text-red-500 uppercase tracking-widest ml-1 animate-fade-in">⚠ {errors.phone}</p>}
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 block ml-1">Password</label>
+              <div className="relative group">
                 <input
-                  id={`signup-${field}`}
-                  name={field}
-                  type={
-                    field.includes("password") || field === "confirmPassword"
-                      ? "password"
-                      : field === "email"
-                        ? "email"
-                        : "text"
-                  }
-                  value={form[field]}
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={form.password}
                   onChange={handleChange}
-                  className="input-field"
-                  placeholder={
-                    field === "phone"
-                      ? "+91 XXXXXXXXXX"
-                      : field === "password" || field === "confirmPassword"
-                        ? "••••••••"
-                        : ""
-                  }
-                  required
+                  className={`w-full bg-stone-50 border ${errors.password ? 'border-red-400 ring-2 ring-red-50' : 'border-stone-100 focus:border-brand-500'} rounded-xl px-5 py-3 text-stone-900 font-medium transition-all outline-none pr-12`}
+                  placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-300 hover:text-brand-500 transition-colors"
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
               </div>
-            ))}
+              {errors.password && <p className="text-[9px] font-black text-red-500 uppercase tracking-widest ml-1 animate-fade-in">⚠ {errors.password}</p>}
+            </div>
+
+            {/* Confirm Password Field */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 block ml-1">Confirm Password</label>
+              <div className="relative group">
+                <input
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  className={`w-full bg-stone-50 border ${errors.confirmPassword ? 'border-red-400 ring-2 ring-red-50' : 'border-stone-100 focus:border-brand-500'} rounded-xl px-5 py-3 text-stone-900 font-medium transition-all outline-none pr-12`}
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-300 hover:text-brand-500 transition-colors"
+                >
+                  {showConfirmPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
+              {errors.confirmPassword && <p className="text-[9px] font-black text-red-500 uppercase tracking-widest ml-1 animate-fade-in">⚠ {errors.confirmPassword}</p>}
+            </div>
+
             <button
               id="signup-submit"
               type="submit"
               disabled={loading}
-              className="btn-primary w-full mt-2"
+              className="w-full bg-stone-900 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-brand-600 shadow-xl shadow-brand-100 transition-all duration-300 mt-4"
             >
-              {loading ? "Creating account…" : "Create Account & Get OTP"}
+              {loading ? "Preparing Account…" : "Create Account & Get OTP"}
             </button>
 
-            <div className="flex items-center gap-4 my-8">
-              <div className="flex-1 border-t border-stone-800"></div>
-              <span className="text-xs uppercase tracking-widest text-stone-500 font-bold">
-                Or continue with
-              </span>
-              <div className="flex-1 border-t border-stone-800"></div>
+            <div className="relative py-4">
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-stone-100"></div></div>
+              <div className="relative flex justify-center text-[10px] uppercase tracking-widest"><span className="bg-[#FDFCFB] px-4 text-stone-300 font-bold">Or continue with</span></div>
             </div>
 
             <div className="flex justify-center">
               <GoogleLogin
                 onSuccess={handleGoogleSuccess}
-                onError={() => toast.error("Google Login Failed")}
+                onError={() => toast.error("Google Signup Failed")}
                 useOneTap
-                theme="filled_black"
+                theme="outline"
                 shape="pill"
+                width="100%"
               />
             </div>
           </form>
-          <p className="text-center text-stone-400 text-sm mt-6">
+
+          <p className="mt-8 text-center text-stone-400 font-medium text-sm">
             Already have an account?{" "}
             <Link
               to={APP_ROUTES.LOGIN}
-              className="text-brand-400 hover:text-brand-300 font-medium"
+              className="text-brand-600 hover:text-brand-700 font-black decoration-brand-600/30 decoration-2 underline-offset-4 hover:underline"
             >
-              Login
+              Sign In
             </Link>
           </p>
         </div>

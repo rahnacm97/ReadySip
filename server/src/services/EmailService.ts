@@ -4,8 +4,8 @@ import type { IEmailService } from "../interfaces/services/INotificationService"
 export class EmailService implements IEmailService {
   private readonly transporter = nodemailer.createTransport({
     host: process.env["SMTP_HOST"] ?? "smtp.gmail.com",
-    port: parseInt(process.env["SMTP_PORT"] ?? "587"),
-    secure: process.env["SMTP_SECURE"] === "true",
+    port: parseInt(process.env["SMTP_PORT"] ?? "465"),
+    secure: process.env["SMTP_SECURE"] !== "false", // true by default (port 465 SSL)
     auth: { user: process.env["SMTP_USER"], pass: process.env["SMTP_PASS"] },
   });
 

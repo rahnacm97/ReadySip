@@ -5,9 +5,10 @@ export class EmailService implements IEmailService {
   private readonly transporter = nodemailer.createTransport({
     host: process.env["SMTP_HOST"] ?? "smtp.gmail.com",
     port: parseInt(process.env["SMTP_PORT"] ?? "465"),
-    secure: process.env["SMTP_SECURE"] !== "false", // true by default (port 465 SSL)
+    secure: process.env["SMTP_SECURE"] !== "false",
     auth: { user: process.env["SMTP_USER"], pass: process.env["SMTP_PASS"] },
-  });
+    family: 4,
+  } as any);
 
   private readonly from = `"ReadySip ☕" <${process.env["SMTP_USER"]}>`;
 

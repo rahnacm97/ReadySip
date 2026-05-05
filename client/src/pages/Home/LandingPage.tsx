@@ -112,12 +112,12 @@ const LandingPage: React.FC = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_#f5efe6_0%,_#FDF5E6_100%)]" />
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-slide-up pt-16 pb-8">
-          <div className="w-full max-w-2xl mx-auto mb-10">
-            <div className="flex items-center justify-center gap-4 mb-3 flex-wrap">
-              <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-6 animate-slide-up pt-12 pb-6">
+          <div className="w-full max-w-2xl mx-auto mb-8">
+            <div className="flex items-center justify-center gap-3 mb-2 flex-wrap">
+              <svg width="42" height="42" viewBox="0 0 64 64" fill="none">
                 <circle
                   cx="32"
                   cy="32"
@@ -163,7 +163,7 @@ const LandingPage: React.FC = () => {
                 />
               </svg>
               <div className="text-center">
-                <h1 className="font-display text-6xl sm:text-7xl font-bold leading-none tracking-tight">
+                <h1 className="font-display text-5xl sm:text-6xl font-bold leading-none tracking-tight">
                   <span className="text-warm-500">Ready</span>
                   <span className="text-brand-600">Sip</span>
                 </h1>
@@ -175,7 +175,7 @@ const LandingPage: React.FC = () => {
                   <span className="h-px w-7 bg-amber-500 block" />
                 </div>
               </div>
-              <svg width="44" height="52" viewBox="0 0 56 64" fill="none">
+              <svg width="34" height="42" viewBox="0 0 56 64" fill="none">
                 <circle
                   cx="28"
                   cy="32"
@@ -214,17 +214,17 @@ const LandingPage: React.FC = () => {
               </svg>
             </div>
           </div>
-          <div className="inline-flex items-center gap-2 bg-brand-500/5 border border-brand-500/10 rounded-full px-4 py-2 mb-8">
-            <span className="text-brand-500 text-sm font-semibold tracking-wide uppercase">
+          <div className="inline-flex items-center gap-2 bg-brand-500/5 border border-brand-500/10 rounded-full px-4 py-2 mb-6">
+            <span className="text-brand-500 text-xs font-semibold tracking-wide uppercase">
               ☕ Bangalore's Favourite Café
             </span>
           </div>
-          <h1 className="font-display text-5xl sm:text-7xl font-bold text-warm-500 mb-6 leading-tight">
+          <h1 className="font-display text-4xl sm:text-6xl font-bold text-warm-500 mb-5 leading-tight">
             Sip Smarter,
             <br />
             <span className="text-brand-500 italic">Not Harder</span>
           </h1>
-          <p className="text-warm-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+          <p className="text-warm-400 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed font-medium">
             Bangalore moves fast. So does your coffee. Order your favourite tea,
             coffee or juice online — walk in and it's ready. No waiting. Just
             vibes.
@@ -232,18 +232,18 @@ const LandingPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/menu"
-              className="btn-primary text-lg px-8 py-4 shadow-xl shadow-brand-500/20"
+              className="btn-primary text-base px-8 py-3.5 shadow-xl shadow-brand-500/20"
             >
               Order Now →
             </Link>
-            <Link to="/signup" className="btn-outline text-lg px-8 py-4">
+            <Link to="/signup" className="btn-outline text-base px-8 py-3.5">
               Create Account
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-brand-500/40 animate-bounce">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-brand-500/40 animate-bounce">
           <svg
-            className="w-8 h-8"
+            className="w-6 h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -259,13 +259,13 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* How it works */}
-      <section className="py-24 px-6 bg-white/50 border-y border-stone-200">
+      <section className="py-20 px-6 bg-white/50 border-y border-stone-200">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl font-bold text-warm-500 mb-4 uppercase tracking-tight">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl font-bold text-warm-500 mb-4 uppercase tracking-tight">
               How ReadySip Works
             </h2>
-            <p className="text-warm-400 text-lg">
+            <p className="text-warm-400 text-base">
               Three simple steps to your perfect brew
             </p>
           </div>
@@ -282,7 +282,7 @@ const LandingPage: React.FC = () => {
                 <h3 className="font-display text-xl font-semibold text-warm-500 mb-3">
                   {f.title}
                 </h3>
-                <p className="text-warm-400 leading-relaxed">{f.desc}</p>
+                <p className="text-warm-400 leading-relaxed text-sm">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -290,13 +290,13 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Menu Preview */}
-      <section className="py-24 px-6">
+      <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl font-bold text-warm-500 mb-4 uppercase tracking-tight">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl font-bold text-warm-500 mb-4 uppercase tracking-tight">
               What We Brew
             </h2>
-            <p className="text-warm-400 text-lg">
+            <p className="text-warm-400 text-base">
               Handcrafted with love, served fresh every time
             </p>
           </div>
@@ -310,11 +310,11 @@ const LandingPage: React.FC = () => {
                 <div className="text-6xl mb-6 group-hover:rotate-12 transition-transform duration-300">
                   {d.emoji}
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-warm-500 mb-2">
+                <h3 className="font-display text-xl font-semibold text-warm-500 mb-2">
                   {d.label}
                 </h3>
-                <p className="text-warm-400">{d.desc}</p>
-                <div className="mt-6 text-brand-500 font-bold text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-warm-400 text-sm">{d.desc}</p>
+                <div className="mt-6 text-brand-500 font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                   View Menu →
                 </div>
               </Link>
@@ -323,7 +323,7 @@ const LandingPage: React.FC = () => {
           <div className="text-center mt-12">
             <Link
               to="/menu"
-              className="btn-primary text-lg px-10 py-4 shadow-xl shadow-brand-500/20"
+              className="btn-primary text-base px-10 py-3.5 shadow-xl shadow-brand-500/20"
             >
               View Full Menu
             </Link>
@@ -333,13 +333,13 @@ const LandingPage: React.FC = () => {
 
       {/* Testimonials */}
       {testimonials.length > 0 && (
-        <section className="py-32 px-6 bg-[radial-gradient(circle_at_bottom_left,_#fff_0%,_#FDF5E6_100%)] relative overflow-hidden">
+        <section className="py-24 px-6 bg-[radial-gradient(circle_at_bottom_left,_#fff_0%,_#FDF5E6_100%)] relative overflow-hidden">
           {/* Decorative background elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
           <div className="max-w-5xl mx-auto relative">
-            <div className="text-center mb-20">
+            <div className="text-center mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -350,16 +350,16 @@ const LandingPage: React.FC = () => {
                   Customer Stories
                 </span>
               </motion.div>
-              <h2 className="font-display text-4xl sm:text-5xl font-bold text-warm-500 mb-4 tracking-tight uppercase">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-warm-500 mb-4 tracking-tight uppercase">
                 ReadySip <span className="text-brand-500 italic">Love</span>
               </h2>
-              <p className="text-warm-400 text-lg max-w-xl mx-auto font-medium">
+              <p className="text-warm-400 text-base max-w-xl mx-auto font-medium">
                 Join thousands of happy sippers skiping the wait in Bangalore
                 every day.
               </p>
             </div>
 
-            <div className="relative h-[400px] sm:h-[350px] flex items-center justify-center">
+            <div className="relative h-[350px] sm:h-[300px] flex items-center justify-center">
               <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                   key={currentIndex}
@@ -382,52 +382,51 @@ const LandingPage: React.FC = () => {
                   }}
                   className="absolute w-full max-w-2xl"
                 >
-                  <div className="bg-white p-10 sm:p-12 rounded-[3rem] border border-stone-100 shadow-2xl shadow-stone-200/50 relative overflow-hidden group">
+                  <div className="bg-white p-8 sm:p-10 rounded-[2.5rem] border border-stone-100 shadow-2xl shadow-stone-200/50 relative overflow-hidden group">
                     {/* Quote icon */}
                     <div className="absolute top-6 right-10 text-brand-500/10 text-8xl font-serif pointer-events-none">
                       “
                     </div>
 
-                    <div className="flex items-center gap-1 mb-8">
+                    <div className="flex items-center gap-1 mb-6">
                       {[...Array(5)].map((_, i) => (
                         <motion.span
                           key={i}
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: i * 0.1 }}
-                          className={`text-2xl ${i < testimonials[currentIndex].rating ? "text-amber-400" : "text-stone-200"}`}
+                          className={`text-xl ${i < testimonials[currentIndex].rating ? "text-amber-400" : "text-stone-200"}`}
                         >
                           ★
                         </motion.span>
                       ))}
                     </div>
 
-                    <p className="text-warm-500 text-xl sm:text-2xl italic mb-10 leading-relaxed font-medium relative z-10">
+                    <p className="text-warm-500 text-lg sm:text-xl italic mb-8 leading-relaxed font-medium relative z-10">
                       "{testimonials[currentIndex].feedback}"
                     </p>
 
-                    <div className="flex items-center justify-between pt-8 border-t border-stone-50">
+                    <div className="flex items-center justify-between pt-6 border-t border-stone-50">
                       <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-brand-400 to-brand-600 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-brand-500/20">
+                        <div className="w-12 h-12 rounded-xl bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-brand-400 to-brand-600 flex items-center justify-center text-white text-lg font-black shadow-lg shadow-brand-500/20">
                           {testimonials[currentIndex].customerName?.charAt(0) ||
                             "U"}
                         </div>
                         <div>
-                          <h4 className="font-bold text-warm-500 text-lg">
+                          <h4 className="font-bold text-warm-500 text-base">
                             {testimonials[currentIndex].customerName ||
                               "Anonymous"}
                           </h4>
                           <div className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                            <p className="text-warm-300 text-[10px] uppercase tracking-widest font-black">
+                            <p className="text-warm-300 text-[9px] uppercase tracking-widest font-black">
                               Verified Customer
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      {/* Page indicator for mobile */}
-                      <div className="text-warm-200 text-xs font-black font-mono">
+                      <div className="text-warm-200 text-[10px] font-black font-mono">
                         {String(currentIndex + 1).padStart(2, "0")} /{" "}
                         {String(testimonials.length).padStart(2, "0")}
                       </div>
@@ -437,17 +436,16 @@ const LandingPage: React.FC = () => {
               </AnimatePresence>
 
               {/* Navigation Controls */}
-              <div className="absolute -bottom-16 sm:bottom-auto sm:inset-x-[-100px] flex justify-center sm:justify-between items-center gap-6 px-4 z-20">
+              <div className="absolute -bottom-12 sm:bottom-auto sm:inset-x-[-80px] flex justify-center sm:justify-between items-center gap-4 px-4 z-20">
                 <button
                   onClick={() => paginate(-1)}
-                  className="w-14 h-14 rounded-2xl bg-white shadow-xl flex items-center justify-center text-warm-400 hover:text-brand-500 hover:scale-110 active:scale-95 transition-all border border-stone-100 group"
+                  className="w-12 h-12 rounded-xl bg-white shadow-lg flex items-center justify-center text-warm-400 hover:text-brand-500 hover:scale-110 active:scale-95 transition-all border border-stone-100 group"
                 >
-                  <span className="text-2xl group-hover:-translate-x-1 transition-transform">
+                  <span className="text-xl group-hover:-translate-x-1 transition-transform">
                     ←
                   </span>
                 </button>
 
-                {/* Dots indicator */}
                 <div className="flex gap-2">
                   {testimonials.map((_, i) => (
                     <button
@@ -456,16 +454,16 @@ const LandingPage: React.FC = () => {
                         setDirection(i > currentIndex ? 1 : -1);
                         setCurrentIndex(i);
                       }}
-                      className={`h-1.5 rounded-full transition-all duration-500 ${i === currentIndex ? "w-8 bg-brand-500" : "w-2 bg-stone-200 hover:bg-stone-300"}`}
+                      className={`h-1 rounded-full transition-all duration-500 ${i === currentIndex ? "w-6 bg-brand-500" : "w-1.5 bg-stone-200"}`}
                     />
                   ))}
                 </div>
 
                 <button
                   onClick={() => paginate(1)}
-                  className="w-14 h-14 rounded-2xl bg-white shadow-xl flex items-center justify-center text-warm-400 hover:text-brand-500 hover:scale-110 active:scale-95 transition-all border border-stone-100 group"
+                  className="w-12 h-12 rounded-xl bg-white shadow-lg flex items-center justify-center text-warm-400 hover:text-brand-500 hover:scale-110 active:scale-95 transition-all border border-stone-100 group"
                 >
-                  <span className="text-2xl group-hover:translate-x-1 transition-transform">
+                  <span className="text-xl group-hover:translate-x-1 transition-transform">
                     →
                   </span>
                 </button>
@@ -476,15 +474,15 @@ const LandingPage: React.FC = () => {
       )}
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-stone-200 bg-white text-center">
-        <div className="flex flex-col items-center gap-6">
-          <img src="/titlebar.png" alt="ReadySip" className="h-16 w-auto" />
-          <p className="text-stone-400 text-sm max-w-sm">
+      <footer className="py-12 px-6 border-t border-stone-200 bg-white text-center">
+        <div className="flex flex-col items-center gap-4">
+          <img src="/titlebar.png" alt="ReadySip" className="h-12 w-auto" />
+          <p className="text-stone-400 text-xs max-w-sm">
             Bangalore's premium quick-pick café experience. Order online, skip
             the wait.
           </p>
-          <div className="w-12 h-px bg-stone-200" />
-          <p className="text-stone-500 text-xs font-medium tracking-widest uppercase">
+          <div className="w-8 h-px bg-stone-200" />
+          <p className="text-stone-500 text-[10px] font-medium tracking-widest uppercase">
             © {new Date().getFullYear()} ReadySip, Bangalore. Brewed with ❤️
           </p>
         </div>
